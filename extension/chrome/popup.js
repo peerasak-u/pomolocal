@@ -4,7 +4,15 @@ const storage = chrome.storage.local;
 const listContainer = document.getElementById('site-list');
 
 async function init() {
-    const { blockedSites } = await storage.get('blockedSites');
+    const { blockedSites, connectionStatus } = await storage.get(['blockedSites', 'connectionStatus']);
+    
+    const errorDiv = document.getElementById('connection-error');
+    if (connectionStatus !== 'connected') {
+        errorDiv.style.display = 'block';
+    } else {
+        errorDiv.style.display = 'none';
+    }
+
     const enabledSites = blockedSites || BLOCKED_DOMAINS;
 
     BLOCKED_DOMAINS.forEach(domain => {

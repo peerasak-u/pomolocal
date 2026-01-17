@@ -16,6 +16,7 @@ function connect() {
             console.log('Connected to Pomolocal CLI');
             chrome.action.setBadgeText({ text: '...' });
             chrome.action.setBadgeBackgroundColor({ color: '#FFC107' });
+            chrome.storage.local.set({ connectionStatus: 'connected' });
         };
 
         socket.onmessage = (event) => {
@@ -34,10 +35,12 @@ function connect() {
             clearRules(); 
             socket = null;
             currentMode = 'UNKNOWN';
+            chrome.storage.local.set({ connectionStatus: 'disconnected' });
         };
         
         socket.onerror = (e) => {
             console.debug('CLI unreachable');
+            chrome.storage.local.set({ connectionStatus: 'disconnected' });
         };
     } catch (e) {
         console.log('Connection setup failed:', e);

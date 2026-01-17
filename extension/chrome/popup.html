@@ -96,6 +96,11 @@
 </head>
 <body>
     <h2>Blocked Sites</h2>
+    <div id="connection-error" style="display: none; background-color: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin-bottom: 12px; font-size: 13px; border: 1px solid #ffcdd2;">
+        <strong>Connection Failed</strong><br>
+        Please open terminal and run:<br>
+        <code style="background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 3px;">bun run src/index.tsx</code>
+    </div>
     <div id="site-list" class="site-list">
         <!-- Sites will be populated here -->
     </div>
