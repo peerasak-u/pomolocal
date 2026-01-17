@@ -7,6 +7,15 @@ const fontsPath = resolve(process.cwd(), 'fonts/block.json');
 const fontContent = readFileSync(fontsPath, 'utf-8');
 const cliContent = readFileSync(distPath, 'utf-8');
 
+// Helper to escape non-ASCII characters to prevent encoding issues
+function escapeUnicode(str: string) {
+    return str.replace(/[^\x00-\x7F]/g, c => {
+        return '\\u' + ('0000' + c.charCodeAt(0).toString(16)).slice(-4);
+    });
+}
+
+const escapedFontContent = escapeUnicode(fontContent);
+
 // The replacement logic:
 // We look for the GetFont function definition in the bundled file.
 // It looks something like:
@@ -15,7 +24,7 @@ const cliContent = readFileSync(distPath, 'utf-8');
 const replacement = `
   var GetFont = (font) => {
     if (font === 'block') {
-      return ${fontContent};
+      return ${escapedFontContent};
     }
     Debugging.report(\`Running GetFont\`, 1);
     try {
@@ -36,7 +45,7 @@ if (newCliContent === cliContent) {
       const fallbackReplacement = `
       let FONTFACE;
       if (font === 'block') {
-         FONTFACE = ${fontContent};
+         FONTFACE = ${escapedFontContent};
       } else {
          FONTFACE = __require(path3.normalize(\`../fonts/\${font}.json\`));
       }
