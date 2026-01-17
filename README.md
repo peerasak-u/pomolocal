@@ -18,11 +18,18 @@ A Mac-first, "Anti-Distraction" CLI Pomodoro timer that physically blocks sites 
    ```
 
 2. **Install the Browser Extension:**
-   - Open Chrome/Brave/Edge/Arc.
+
+   **Chrome / Brave / Edge / Arc:**
    - Go to `chrome://extensions`.
    - Enable **Developer Mode**.
    - Click **Load Unpacked**.
-   - Select the `extension` folder in this project.
+   - Select the `extension/chrome` folder.
+
+   **Firefox:**
+   - Go to `about:debugging`.
+   - Click **This Firefox** (in the sidebar).
+   - Click **Load Temporary Add-on...**.
+   - Select the `manifest.json` file inside the `extension/firefox` folder.
 
 ## Usage
 
