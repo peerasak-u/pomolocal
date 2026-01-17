@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Pomolocal",
+  "version": "1.0.0",
+  "description": "Companion extension for Pomolocal CLI",
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Pomolocal"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["blocked.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

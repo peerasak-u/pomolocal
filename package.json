@@ -1,0 +1,23 @@
+{
+  "name": "pomolocal",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^25.0.9",
+    "@types/react": "^19.2.8",
+    "react-devtools-core": "^7.0.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "ink": "^6.6.0",
+    "ink-big-text": "^2.0.0",
+    "ink-gradient": "^3.0.0",
+    "meow": "^14.0.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  }
+}

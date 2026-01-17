@@ -1,0 +1,129 @@
+import React, { useState, useEffect } from 'react';
+import { Box, Text, useInput, useApp } from 'ink';
+import Gradient from 'ink-gradient';
+import BigText from 'ink-big-text';
+import { formatTime } from './timer';
+import { broadcast } from './server';
+import { notify, SoundName } from './sound';
+
+interface AppProps {
+    sessionDuration: number;
+    relaxDuration: number;
+    loopCount: number;
+    soundName: SoundName;
+}
+
+type Mode = 'FOCUS' | 'RELAX' | 'FINISHED';
+
+export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCount, soundName }) => {
+    const { exit } = useApp();
+    const [mode, setMode] = useState<Mode>('FOCUS');
+    const [timeLeft, setTimeLeft] = useState(sessionDuration);
+    const [cycle, setCycle] = useState(1);
+    const [isActive, setIsActive] = useState(true);
+
+    useEffect(() => {
+        // Initial broadcast
+        broadcast({ 
+            type: 'STATE_UPDATE', 
+            mode: 'FOCUS', 
+            blockedDomains: ["x.com", "facebook.com", "youtube.com", "instagram.com", "reddit.com"] 
+        });
+        notify("Focus Mode Started", "Pomolocal", soundName);
+    }, []);
+
+    useEffect(() => {
+        // Heartbeat to sync state with new extension connections
+        const syncInterval = setInterval(() => {
+             broadcast({ 
+                type: 'STATE_UPDATE', 
+                mode: mode,
+                // We keep sending the list for protocol completeness, even if extension has a fallback
+                blockedDomains: ["x.com", "facebook.com", "youtube.com", "instagram.com", "reddit.com"] 
+            });
+        }, 1000);
+
+        return () => clearInterval(syncInterval);
+    }, [mode]);
+
+    useEffect(() => {
+        let interval: Timer | null = null;
+        if (isActive && mode !== 'FINISHED' && timeLeft > 0) {
+            interval = setInterval(() => {
+                setTimeLeft((prev) => prev - 1);
+            }, 1000);
+        } else if (timeLeft === 0 && mode !== 'FINISHED') {
+            handleTransition();
+        }
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [isActive, mode, timeLeft]);
+
+    const handleTransition = () => {
+        if (mode === 'FOCUS') {
+            notify("Focus Session Complete", "Pomolocal", soundName);
+            // If we just finished the last cycle
+            if (cycle >= loopCount) {
+                setMode('FINISHED');
+                broadcast({ type: 'STATE_UPDATE', mode: 'FINISHED' });
+                // Delay exit slightly to show finished state? Or exit immediately?
+                // PRD says "App exits gracefully".
+                setTimeout(() => exit(), 1000);
+            } else {
+                setMode('RELAX');
+                setTimeLeft(relaxDuration);
+                broadcast({ type: 'STATE_UPDATE', mode: 'RELAX' });
+            }
+        } else if (mode === 'RELAX') {
+            notify("Break Over - Focus Time", "Pomolocal", soundName);
+            setMode('FOCUS');
+            setCycle(c => c + 1);
+            setTimeLeft(sessionDuration);
+            broadcast({ 
+                type: 'STATE_UPDATE', 
+                mode: 'FOCUS',
+                blockedDomains: ["x.com", "facebook.com", "youtube.com", "instagram.com", "reddit.com"] 
+            });
+        }
+    };
+
+    useInput((input) => {
+        if (input === 'q') {
+            broadcast({ type: 'STATE_UPDATE', mode: 'FINISHED' });
+            exit();
+        }
+        if (input === ' ') {
+            setIsActive(!isActive);
+        }
+        if (input === 's') {
+            // Force transition
+            setTimeLeft(0); 
+        }
+    });
+
+    if (mode === 'FINISHED') {
+        return (
+             <Box flexDirection="column" alignItems="center">
+                <Text color="green">All cycles completed!</Text>
+            </Box>
+        );
+    }
+
+    // Gradient colors
+    const colors = mode === 'FOCUS' ? 'passion' : 'morning';
+
+    return (
+        <Box flexDirection="column" alignItems="center" justifyContent="center" height={20}>
+            <Gradient name={colors}>
+                <BigText text={formatTime(timeLeft)} font="block" />
+            </Gradient>
+            <Text bold color={mode === 'FOCUS' ? 'red' : 'green'}>
+                {mode === 'FOCUS' ? '🍅 FOCUS MODE ENABLED' : '☕ RELAX TIME'}
+            </Text>
+            <Box marginTop={1}>
+                <Text dimColor>Cycle: {cycle}/{loopCount} | [Space] Pause | [s] Skip | [q] Quit</Text>
+            </Box>
+        </Box>
+    );
+};
