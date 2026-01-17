@@ -13,12 +13,12 @@ interface AppProps {
     soundName: SoundName;
 }
 
-type Mode = 'FOCUS' | 'RELAX' | 'FINISHED';
+type Mode = 'FOCUS' | 'RELAX' | 'FINISHED' | 'WARMUP';
 
 export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCount, soundName }) => {
     const { exit } = useApp();
-    const [mode, setMode] = useState<Mode>('FOCUS');
-    const [timeLeft, setTimeLeft] = useState(sessionDuration);
+    const [mode, setMode] = useState<Mode>('WARMUP');
+    const [timeLeft, setTimeLeft] = useState(60);
     const [cycle, setCycle] = useState(1);
     const [isActive, setIsActive] = useState(true);
 
@@ -26,10 +26,10 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
         // Initial broadcast
         broadcast({ 
             type: 'STATE_UPDATE', 
-            mode: 'FOCUS', 
-            blockedDomains: ["x.com", "facebook.com", "youtube.com", "instagram.com", "reddit.com"] 
+            mode: 'WARMUP', 
+            blockedDomains: [] 
         });
-        notify("Focus Mode Started", "Pomolocal", soundName);
+        notify("Warmup Phase Started", "Pomolocal", soundName);
     }, []);
 
     useEffect(() => {
@@ -61,7 +61,16 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
     }, [isActive, mode, timeLeft]);
 
     const handleTransition = () => {
-        if (mode === 'FOCUS') {
+        if (mode === 'WARMUP') {
+            notify("Warmup Complete - Focus Time", "Pomolocal", soundName);
+            setMode('FOCUS');
+            setTimeLeft(sessionDuration);
+            broadcast({ 
+                type: 'STATE_UPDATE', 
+                mode: 'FOCUS',
+                blockedDomains: ["x.com", "facebook.com", "youtube.com", "instagram.com", "reddit.com"] 
+            });
+        } else if (mode === 'FOCUS') {
             notify("Focus Session Complete", "Pomolocal", soundName);
             // If we just finished the last cycle
             if (cycle >= loopCount) {
@@ -115,15 +124,15 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
     }
 
     // Gradient colors
-    const colors = mode === 'FOCUS' ? 'passion' : 'morning';
+    const colors = mode === 'FOCUS' ? 'passion' : (mode === 'WARMUP' ? 'summer' : 'morning');
 
     return (
         <Box flexDirection="column" alignItems="center" justifyContent="center" height={20}>
             <Gradient name={colors}>
                 <BigText text={formatTime(timeLeft)} font="block" />
             </Gradient>
-            <Text bold color={mode === 'FOCUS' ? 'red' : 'green'}>
-                {mode === 'FOCUS' ? '🍅 FOCUS MODE ENABLED' : '☕ RELAX TIME'}
+            <Text bold color={mode === 'FOCUS' ? 'red' : (mode === 'WARMUP' ? 'yellow' : 'green')}>
+                {mode === 'FOCUS' ? '🍅 FOCUS MODE ENABLED' : (mode === 'WARMUP' ? '🔥 WARMUP PHASE' : '☕ RELAX TIME')}
             </Text>
             <Box marginTop={1}>
                 <Text dimColor>Cycle: {cycle}/{loopCount} | [Space] Pause | [s] Skip | [q] Quit</Text>

@@ -4,7 +4,7 @@ const clients = new Set<ServerWebSocket<unknown>>();
 
 export interface Message {
     type: "STATE_UPDATE";
-    mode: "FOCUS" | "RELAX" | "FINISHED";
+    mode: "FOCUS" | "RELAX" | "FINISHED" | "WARMUP";
     blockedDomains?: string[];
 }
 
