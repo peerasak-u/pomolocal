@@ -12,7 +12,7 @@ A Mac-first, "Anti-Distraction" CLI Pomodoro timer that physically blocks sites 
 
 1. **Clone the repository:**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/peerasak-u/pomolocal.git
    cd pomolocal
    bun install
    ```
