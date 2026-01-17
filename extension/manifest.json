@@ -12,10 +12,12 @@
     "<all_urls>"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background.js",
+    "type": "module"
   },
   "action": {
-    "default_title": "Pomolocal"
+    "default_title": "Pomolocal",
+    "default_popup": "popup.html"
   },
   "web_accessible_resources": [
     {
