@@ -1,8 +1,21 @@
 {
   "name": "pomolocal",
-  "module": "index.ts",
+  "version": "0.0.1",
+  "description": "A Mac-first, Anti-Distraction CLI Pomodoro timer",
+  "main": "dist/cli.js",
   "type": "module",
-  "private": true,
+  "private": false,
+  "bin": {
+    "pomolocal": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun build src/index.tsx --outfile=dist/cli.js --target=bun",
+    "start": "bun run src/index.tsx",
+    "prepublishOnly": "bun run build"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "^25.0.9",

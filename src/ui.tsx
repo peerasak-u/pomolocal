@@ -4,7 +4,7 @@ import Gradient from 'ink-gradient';
 import BigText from 'ink-big-text';
 import { formatTime } from './timer';
 import { broadcast } from './server';
-import { notify, SoundName } from './sound';
+import { notify, type SoundName } from './sound';
 
 interface AppProps {
     sessionDuration: number;

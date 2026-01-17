@@ -8,13 +8,23 @@ A Mac-first, "Anti-Distraction" CLI Pomodoro timer that physically blocks sites 
 - **TUI:** Beautiful terminal interface with gradients and big text.
 - **Browser Blocking:** Blocks distracting sites during focus sessions via Chrome Extension.
 
-## Installation
+## Quick Start
+
+Run instantly with bunx:
+
+```bash
+bunx pomolocal
+```
+
+## Installation (Local)
 
 1. **Clone the repository:**
    ```bash
    git clone https://github.com/peerasak-u/pomolocal.git
    cd pomolocal
    bun install
+   bun run build
+   bun link
    ```
 
 2. **Install the Browser Extension:**
@@ -33,16 +43,22 @@ A Mac-first, "Anti-Distraction" CLI Pomodoro timer that physically blocks sites 
 
 ## Usage
 
-Run the CLI:
+Run via bunx:
 
 ```bash
-bun run src/index.tsx
+bunx pomolocal
+```
+
+Or run locally:
+
+```bash
+bun start
 ```
 
 With custom settings:
 
 ```bash
-bun run src/index.tsx --session 45m --relax 10m --loop 4
+bunx pomolocal --session 45m --relax 10m --loop 4
 ```
 
 ### Controls
@@ -52,4 +68,5 @@ bun run src/index.tsx --session 45m --relax 10m --loop 4
 
 ## Development
 
-- **Build:** `bun build src/index.tsx --outfile=dist/cli.js --target=bun`
+- **Dev:** `bun run src/index.tsx`
+- **Build:** `bun run build`

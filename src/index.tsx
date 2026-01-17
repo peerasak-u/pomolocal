@@ -5,7 +5,7 @@ import meow from 'meow';
 import { App } from './ui';
 import { startServer } from './server';
 import { parseDuration } from './timer';
-import { SoundName } from './sound';
+import type { SoundName } from './sound';
 
 const cli = meow(`
 	Usage
