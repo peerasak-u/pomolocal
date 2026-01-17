@@ -1,4 +1,4 @@
-import { ServerWebSocket } from "bun";
+import type { ServerWebSocket } from "bun";
 
 const clients = new Set<ServerWebSocket<unknown>>();
 
@@ -8,8 +8,10 @@ export interface Message {
     blockedDomains?: string[];
 }
 
+let server: ReturnType<typeof Bun.serve> | null = null;
+
 export function startServer(port: number = 9999) {
-    Bun.serve({
+    server = Bun.serve({
         port,
         fetch(req, server) {
             if (server.upgrade(req)) {
@@ -29,6 +31,13 @@ export function startServer(port: number = 9999) {
             }
         }
     });
+}
+
+export function stopServer() {
+    if (server) {
+        server.stop();
+        server = null;
+    }
 }
 
 export function broadcast(message: Message) {

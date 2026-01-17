@@ -3,7 +3,7 @@ import { Box, Text, useInput, useApp } from 'ink';
 import Gradient from 'ink-gradient';
 import BigText from 'ink-big-text';
 import { formatTime } from './timer';
-import { broadcast } from './server';
+import { broadcast, stopServer } from './server';
 import { notify, type SoundName } from './sound';
 
 interface AppProps {
@@ -69,7 +69,10 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
                 broadcast({ type: 'STATE_UPDATE', mode: 'FINISHED' });
                 // Delay exit slightly to show finished state? Or exit immediately?
                 // PRD says "App exits gracefully".
-                setTimeout(() => exit(), 1000);
+                setTimeout(() => {
+                    stopServer();
+                    exit();
+                }, 1000);
             } else {
                 setMode('RELAX');
                 setTimeLeft(relaxDuration);
@@ -91,6 +94,7 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
     useInput((input) => {
         if (input === 'q') {
             broadcast({ type: 'STATE_UPDATE', mode: 'FINISHED' });
+            stopServer();
             exit();
         }
         if (input === ' ') {
