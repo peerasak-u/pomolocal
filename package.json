@@ -1,6 +1,6 @@
 {
   "name": "pomolocal",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Mac-first, Anti-Distraction CLI Pomodoro timer",
   "main": "dist/cli.js",
   "type": "module",
@@ -9,10 +9,11 @@
     "pomolocal": "dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "fonts"
   ],
   "scripts": {
-    "build": "bun build src/index.tsx --outfile=dist/cli.js --target=bun",
+    "build": "bun build src/index.tsx --outfile=dist/cli.js --target=bun && mkdir -p fonts && cp -r node_modules/cfonts/fonts/* fonts/",
     "start": "bun run src/index.tsx",
     "prepublishOnly": "bun run build"
   },
