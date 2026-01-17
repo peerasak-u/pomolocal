@@ -1,6 +1,6 @@
 {
   "name": "pomolocal",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A Mac-first, Anti-Distraction CLI Pomodoro timer",
   "main": "dist/cli.js",
   "type": "module",
