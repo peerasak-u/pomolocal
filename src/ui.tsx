@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Text, useInput, useApp } from 'ink';
-import Gradient from 'ink-gradient';
 import BigText from 'ink-big-text';
 import { formatTime } from './timer';
 import { broadcast, stopServer } from './server';
@@ -119,19 +118,19 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
         );
     }
 
-    // Gradient colors
-    const colors = mode === 'FOCUS' ? 'passion' : (mode === 'WARMUP' ? 'summer' : 'morning');
-
     return (
         <Box flexDirection="column" alignItems="center" justifyContent="center" height={20}>
-            <Gradient name={colors}>
-                <BigText text={formatTime(timeLeft)} font="block" />
-            </Gradient>
-            <Text bold color={mode === 'FOCUS' ? 'red' : (mode === 'WARMUP' ? 'yellow' : 'green')}>
-                {mode === 'FOCUS' ? '🍅 FOCUS MODE ENABLED' : (mode === 'WARMUP' ? '🔥 WARMUP PHASE' : '☕ RELAX TIME')}
-            </Text>
+            <BigText text={formatTime(timeLeft)} font="block" colors={['white']} />
             <Box marginTop={1}>
-                <Text dimColor>Cycle: {cycle}/{loopCount} | [Space] Pause | [s] Skip | [q] Quit</Text>
+                <Text>
+                    <Text color={mode === 'FOCUS' ? 'red' : (mode === 'WARMUP' ? 'yellow' : 'green')} bold>
+                        {mode === 'FOCUS' ? '🍅 FOCUS' : (mode === 'WARMUP' ? '🔥 WARMUP' : '☕ RELAX')}
+                    </Text>
+                    <Text dimColor>  |  Cycle: {cycle}/{loopCount}</Text>
+                </Text>
+            </Box>
+            <Box marginTop={1}>
+                <Text dimColor>[Space] Pause | [s] Skip | [q] Quit</Text>
             </Box>
         </Box>
     );

@@ -53,7 +53,7 @@ function handleHandshake(ws: ServerWebSocket<ClientData>, message: string | Buff
             ws.data.verified = true;
             clients.add(ws);
             ws.send(JSON.stringify({ type: 'HANDSHAKE_ACK' }));
-            console.log('Client verified and connected');
+            // console.log('Client verified and connected');
         } else {
             ws.send(JSON.stringify({ type: 'HANDSHAKE_FAIL' }));
             ws.close(1008, "Invalid Handshake");

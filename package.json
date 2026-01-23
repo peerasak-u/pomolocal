@@ -1,6 +1,6 @@
 {
   "name": "pomolocal",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A Mac-first, Anti-Distraction CLI Pomodoro timer",
   "main": "dist/cli.js",
   "type": "module",
@@ -29,7 +29,6 @@
   "dependencies": {
     "ink": "^6.6.0",
     "ink-big-text": "^2.0.0",
-    "ink-gradient": "^3.0.0",
     "meow": "^14.0.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
