@@ -31,6 +31,30 @@ async function init() {
             } catch (e) {
                 console.error('Failed to send reconnect message', e);
             }
+            
+            // Wait for connection attempt
+            setTimeout(async () => {
+                const { connectionStatus } = await storage.get('connectionStatus');
+                if (connectionStatus === 'connected') {
+                    window.location.reload();
+                } else {
+                    reconnectBtn.textContent = 'Failed. Retry?';
+                    reconnectBtn.disabled = false;
+                }
+            }, 1500);
+        });
+    }
+
+    const testModeBtn = document.getElementById('test-mode-btn');
+    if (testModeBtn) {
+        testModeBtn.addEventListener('click', async () => {
+            testModeBtn.textContent = 'Activating...';
+            testModeBtn.disabled = true;
+            try {
+                await chrome.runtime.sendMessage({ type: 'TEST_MODE' });
+            } catch (e) {
+                console.error('Failed to send test mode message', e);
+            }
             setTimeout(() => {
                 window.close();
             }, 1000);

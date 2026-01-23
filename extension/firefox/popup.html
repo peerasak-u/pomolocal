@@ -4,48 +4,140 @@
     <meta charset="UTF-8">
     <title>Pomolocal Settings</title>
     <style>
+        :root {
+            --bg-color: #000000;
+            --text-main: #e0e0e0;
+            --text-dim: #888888;
+            --border: #333333;
+            --highlight: #ffffff;
+            /* Improved readable monospace stack */
+            --font-mono: 'SF Mono', 'Segoe UI Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+        }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            width: 300px;
-            padding: 16px;
+            font-family: var(--font-mono);
+            width: 320px;
+            padding: 20px;
             margin: 0;
-            background-color: #f5f5f5;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-size: 13px; /* Increased base size */
         }
-        h2 {
-            margin-top: 0;
-            margin-bottom: 16px;
-            font-size: 16px;
-            color: #333;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 8px;
+        
+        header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
         }
+
+        h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .header-badge {
+            font-size: 10px;
+            color: var(--bg-color);
+            background: var(--text-dim);
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        /* Error Box */
+        #connection-error {
+            background-color: #111;
+            color: var(--text-main);
+            padding: 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        code {
+            display: block;
+            margin-top: 10px;
+            background: #222;
+            padding: 8px;
+            border: 1px solid #333;
+            color: #fff;
+            font-size: 12px;
+        }
+        
+        /* Buttons */
+        button {
+            background: #000;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background: #222;
+            border-color: #666;
+        }
+        #test-mode-btn {
+            background: #fff;
+            color: #000;
+            border: 1px solid #fff;
+        }
+        #test-mode-btn:hover {
+            background: #ccc;
+            border-color: #ccc;
+        }
+
+        /* List */
         .site-list {
             list-style: none;
             padding: 0;
             margin: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
         }
         .site-item {
             display: flex;
             align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            background: #000;
         }
         .site-item:last-child {
             border-bottom: none;
         }
         .site-name {
             flex-grow: 1;
-            font-size: 14px;
-            color: #444;
+            font-size: 14px; /* Larger readable text */
+            color: var(--text-main);
+            font-weight: 500;
         }
+
+        /* Toggle Switch (Monochrome) */
         .switch {
             position: relative;
             display: inline-block;
             width: 40px;
-            height: 24px;
+            height: 20px;
         }
         .switch input {
             opacity: 0;
@@ -59,46 +151,64 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
+            background-color: #333;
+            transition: .2s;
+            border: 1px solid #666;
         }
         .slider:before {
             position: absolute;
             content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
+            height: 14px;
+            width: 14px;
+            left: 2px;
+            bottom: 2px;
+            background-color: #000;
+            transition: .2s;
+            border: 1px solid #666; 
         }
+        
         input:checked + .slider {
-            background-color: #4CAF50;
+            background-color: #fff;
+            border-color: #fff;
         }
         input:checked + .slider:before {
-            transform: translateX(16px);
+            transform: translateX(20px);
+            background-color: #000;
+            border-color: #000;
         }
+
         .hint {
-            margin-top: 16px;
-            font-size: 12px;
-            color: #888;
+            font-size: 11px;
+            color: var(--text-dim);
             text-align: center;
+            border-top: 1px solid var(--border);
+            padding-top: 12px;
         }
     </style>
 </head>
 <body>
-    <h2>Blocked Sites</h2>
-    <div id="connection-error" style="display: none; background-color: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin-bottom: 12px; font-size: 13px; border: 1px solid #ffcdd2;">
-        <strong>Connection Failed</strong><br>
-        Please open terminal and run:<br>
-        <code style="background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 3px;">bunx pomolocal</code>
+    <header>
+        <h1>Pomolocal</h1>
+        <span class="header-badge">Settings</span>
+    </header>
+    
+    <div id="connection-error" style="display: none;">
+        <strong style="text-transform: uppercase; color: #fff;">Connection Failed</strong><br>
+        <br>
+        Server not found. Run in terminal:<br>
+        <code>bunx pomolocal</code>
+        <div style="margin-top: 14px; display: flex; gap: 8px;">
+            <button id="reconnect-btn">Retry</button>
+            <button id="test-mode-btn">Test Mode</button>
+        </div>
     </div>
+
+    <div class="section-label">Blocked Sites</div>
     <div id="site-list" class="site-list">
-        <!-- Sites will be populated here -->
+        <!-- Populated by JS -->
     </div>
-    <div class="hint">Uncheck sites to allow them during focus.</div>
+    
+    <div class="hint">Toggle sites to allow them during focus</div>
     <script type="module" src="popup.js"></script>
 </body>
 </html>

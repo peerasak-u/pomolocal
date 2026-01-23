@@ -31,9 +31,17 @@ async function init() {
             } catch (e) {
                 console.error('Failed to send reconnect message', e);
             }
-            setTimeout(() => {
-                window.close();
-            }, 1000);
+            
+            // Wait for connection attempt
+            setTimeout(async () => {
+                const { connectionStatus } = await storage.get('connectionStatus');
+                if (connectionStatus === 'connected') {
+                    window.location.reload();
+                } else {
+                    reconnectBtn.textContent = 'Failed. Retry?';
+                    reconnectBtn.disabled = false;
+                }
+            }, 1500);
         });
     }
 
