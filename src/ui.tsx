@@ -37,9 +37,7 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
         const syncInterval = setInterval(() => {
              broadcast({ 
                 type: 'STATE_UPDATE', 
-                mode: mode,
-                // We keep sending the list for protocol completeness, even if extension has a fallback
-                blockedDomains: ["x.com", "facebook.com", "youtube.com", "instagram.com", "reddit.com"] 
+                mode: mode
             });
         }, 1000);
 
@@ -67,8 +65,7 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
             setTimeLeft(sessionDuration);
             broadcast({ 
                 type: 'STATE_UPDATE', 
-                mode: 'FOCUS',
-                blockedDomains: ["x.com", "facebook.com", "youtube.com", "instagram.com", "reddit.com"] 
+                mode: 'FOCUS'
             });
         } else if (mode === 'FOCUS') {
             notify("Focus Session Complete", "Pomolocal", soundName);
@@ -94,8 +91,7 @@ export const App: React.FC<AppProps> = ({ sessionDuration, relaxDuration, loopCo
             setTimeLeft(sessionDuration);
             broadcast({ 
                 type: 'STATE_UPDATE', 
-                mode: 'FOCUS',
-                blockedDomains: ["x.com", "facebook.com", "youtube.com", "instagram.com", "reddit.com"] 
+                mode: 'FOCUS'
             });
         }
     };
