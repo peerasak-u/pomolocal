@@ -5,8 +5,9 @@ export function parseDuration(input: string | number): number {
     if (!match) {
         return 25 * 60; // fallback default
     }
-    const value = parseInt(match[1]);
-    const unit = match[2];
+    
+    const [, quantity, unit] = match;
+    const value = parseInt(quantity ?? '0', 10);
     
     switch (unit) {
         case 's': return value;
