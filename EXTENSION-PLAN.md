@@ -66,4 +66,5 @@ When submitting to AMO, you must justify the `<all_urls>` permission.
 - [x] **background.js**: Update alarm interval to `1`.
 - [x] **manifest.json**: Add `browser_specific_settings`.
 - [x] **manifest.json**: (Optional) Update CSP if strictly sticking to external images (not recommended).
+- [x] **Submission Prep**: Replace `<all_urls>` with specific domain list for better privacy/review.
 - [ ] **Test**: Verify `bunx pomolocal` connection works and images load correctly.
