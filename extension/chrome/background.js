@@ -115,4 +115,11 @@ chrome.alarms.onAlarm.addListener((alarm) => {
     }
 });
 
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.type === 'RECONNECT') {
+        connect();
+        sendResponse({ status: 'connecting' });
+    }
+});
+
 connect();

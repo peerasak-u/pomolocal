@@ -20,6 +20,22 @@ async function init() {
         const item = createSiteItem(domain, isEnabled);
         listContainer.appendChild(item);
     });
+
+    const reconnectBtn = document.getElementById('reconnect-btn');
+    if (reconnectBtn) {
+        reconnectBtn.addEventListener('click', async () => {
+            reconnectBtn.textContent = 'Connecting...';
+            reconnectBtn.disabled = true;
+            try {
+                await chrome.runtime.sendMessage({ type: 'RECONNECT' });
+            } catch (e) {
+                console.error('Failed to send reconnect message', e);
+            }
+            setTimeout(() => {
+                window.close();
+            }, 1000);
+        });
+    }
 }
 
 function createSiteItem(domain, isEnabled) {
