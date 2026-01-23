@@ -10,3 +10,6 @@ export const BLOCKED_DOMAINS = [
     "netflix.com",
     "twitch.tv"
 ];
+
+export const WS_PORTS = [23023, 23024, 23025, 23026];
+export const HANDSHAKE_KEY = "pomolocal-v1-handshake-secure";

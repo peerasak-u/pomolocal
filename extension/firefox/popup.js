@@ -42,11 +42,6 @@ function createSiteItem(domain, isEnabled) {
     const li = document.createElement('div');
     li.className = 'site-item';
 
-    const img = document.createElement('img');
-    img.className = 'site-icon';
-    img.src = `./icons/sites/${domain}.png`;
-    li.appendChild(img);
-
     const name = document.createElement('span');
     name.className = 'site-name';
     name.textContent = domain;

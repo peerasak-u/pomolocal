@@ -36,16 +36,27 @@ async function init() {
             }, 1000);
         });
     }
+
+    const testModeBtn = document.getElementById('test-mode-btn');
+    if (testModeBtn) {
+        testModeBtn.addEventListener('click', async () => {
+            testModeBtn.textContent = 'Activating...';
+            testModeBtn.disabled = true;
+            try {
+                await chrome.runtime.sendMessage({ type: 'TEST_MODE' });
+            } catch (e) {
+                console.error('Failed to send test mode message', e);
+            }
+            setTimeout(() => {
+                window.close();
+            }, 1000);
+        });
+    }
 }
 
 function createSiteItem(domain, isEnabled) {
     const li = document.createElement('div');
     li.className = 'site-item';
-
-    const img = document.createElement('img');
-    img.className = 'site-icon';
-    img.src = `./icons/sites/${domain}.png`;
-    li.appendChild(img);
 
     const name = document.createElement('span');
     name.className = 'site-name';

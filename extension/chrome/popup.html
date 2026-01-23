@@ -36,12 +36,6 @@
         .site-item:last-child {
             border-bottom: none;
         }
-        .site-icon {
-            width: 20px;
-            height: 20px;
-            margin-right: 12px;
-            border-radius: 4px;
-        }
         .site-name {
             flex-grow: 1;
             font-size: 14px;
@@ -100,6 +94,10 @@
         <strong>Connection Failed</strong><br>
         Please open terminal and run:<br>
         <code style="background: rgba(0,0,0,0.05); padding: 2px 4px; border-radius: 3px;">bunx pomolocal</code>
+        <div style="margin-top: 8px; display: flex; gap: 8px;">
+            <button id="reconnect-btn" style="padding: 4px 8px; border: 1px solid #ffcdd2; background: white; border-radius: 3px; cursor: pointer; color: #c62828;">Retry</button>
+            <button id="test-mode-btn" style="padding: 4px 8px; border: none; background: #c62828; color: white; border-radius: 3px; cursor: pointer;">Test Mode (1m)</button>
+        </div>
     </div>
     <div id="site-list" class="site-list">
         <!-- Sites will be populated here -->
