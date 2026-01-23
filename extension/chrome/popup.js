@@ -44,7 +44,7 @@ function createSiteItem(domain, isEnabled) {
 
     const img = document.createElement('img');
     img.className = 'site-icon';
-    img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=32`;
+    img.src = `./icons/sites/${domain}.png`;
     li.appendChild(img);
 
     const name = document.createElement('span');
