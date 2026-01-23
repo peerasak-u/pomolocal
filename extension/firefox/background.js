@@ -104,7 +104,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     }
 });
 
-chrome.alarms.create('keepAlive', { periodInMinutes: 0.5 });
+chrome.alarms.create('keepAlive', { periodInMinutes: 1 });
 chrome.alarms.onAlarm.addListener((alarm) => {
     if (alarm.name === 'keepAlive') {
         if (!socket || socket.readyState === WebSocket.CLOSED) {
