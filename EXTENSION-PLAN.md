@@ -65,5 +65,5 @@ When submitting to AMO, you must justify the `<all_urls>` permission.
 - [x] **popup.js**: Update `createSiteItem` to use local icon paths.
 - [x] **background.js**: Update alarm interval to `1`.
 - [x] **manifest.json**: Add `browser_specific_settings`.
-- [ ] **manifest.json**: (Optional) Update CSP if strictly sticking to external images (not recommended).
+- [x] **manifest.json**: (Optional) Update CSP if strictly sticking to external images (not recommended).
 - [ ] **Test**: Verify `bunx pomolocal` connection works and images load correctly.

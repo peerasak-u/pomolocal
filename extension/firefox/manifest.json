@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Pomolocal",
   "version": "1.0.0",
-  "description": "Companion extension for Pomolocal CLI",
+  "description": "Companion extension for Pomolocal CLI. Requires the CLI application running on localhost.",
   "permissions": [
     "declarativeNetRequest",
     "storage",
@@ -37,7 +37,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "pomolocal@pomolocal.com",
+      "id": "clonezer@gmail.com",
       "strict_min_version": "109.0"
     }
   },
