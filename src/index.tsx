@@ -45,7 +45,7 @@ const cli = meow(`
 });
 
 // Start Server
-startServer(9999);
+startServer();
 
 // Parse args
 const sessionDuration = parseDuration(cli.flags.session);

@@ -51,6 +51,6 @@
     }
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' ws://127.0.0.1:9999"
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' ws://127.0.0.1:23023 ws://127.0.0.1:23024 ws://127.0.0.1:23025 ws://127.0.0.1:23026"
   }
 }
